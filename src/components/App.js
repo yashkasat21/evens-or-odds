@@ -3,8 +3,13 @@ import { connect} from 'react-redux';
 import { startGame } from '../actions/settings';
 import { cancelGame } from '../actions/settings';
 import Instructions from './Instructions';
+import { fetchNewDeck } from '../actions/deck';
 
 class App extends Component {
+
+    startGame = () => {
+        this.props.startGame();
+    }
 
     render() {
         console.log('this', this);
@@ -22,7 +27,7 @@ class App extends Component {
                         <div>
                             <h3>A new game awaits</h3>
                             <br />
-                            <button onClick={this.props.startGame}>Start Game</button>
+                            <button onClick={this.startGame}>Start Game</button>
                             <hr />
                             <Instructions />
                         </div>
@@ -39,13 +44,16 @@ const mapStateToProps = state => {
     return { gameStarted: state.gameStarted};
 } 
 
-const mapDispatchToProps = dispatch => {
-    return {
-        startGame:()=> dispatch(startGame()),
-        cancelGame:()=> dispatch(cancelGame())
-    }
-}
+// const mapDispatchToProps = dispatch => {
+//     return {
+//         startGame:()=> dispatch(startGame()),
+//         cancelGame:()=> dispatch(cancelGame()),
+//         fetchNewDeck: () => dispatch(fetchNewDeck())
+//     }
+// }
 
-const componentConnector = connect(mapStateToProps, mapDispatchToProps);
+const componentConnector = connect(mapStateToProps, {
+    startGame, cancelGame, fetchNewDeck }
+    );
 
 export default componentConnector(App);
